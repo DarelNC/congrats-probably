@@ -1,0 +1,238 @@
+:root {
+  color-scheme: dark;
+  --die-size: 90px;
+  --font-display: "Quicksand", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #000000;
+  color: #ffffff;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.play-screen {
+  width: 100%;
+  max-width: 520px;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  text-align: center;
+}
+
+.stage-display {
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage-line {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.stage-subline {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 12px 0 0;
+  color: #d8d8de;
+}
+
+.roll-button {
+  background: transparent;
+  border: 1.5px solid #ffffff;
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 12px 40px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}
+
+.roll-button:hover:not(:disabled) {
+  background: #ffffff;
+  color: #000000;
+}
+
+.roll-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.quit-line {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #d8d8de;
+  margin: 0;
+}
+
+.game-over {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.game-over-line {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.game-over-rolls {
+  font-size: 1.1rem;
+  color: #d8d8de;
+  margin: 0;
+}
+
+.best-badge {
+  color: #ffd166;
+  font-weight: 600;
+}
+
+.best-run {
+  font-size: 0.95rem;
+  color: #8a8a92;
+  margin: -8px 0 0;
+}
+
+.game-over-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.share-button {
+  background: transparent;
+  border: 1.5px solid #6a6a72;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.share-button:hover {
+  border-color: #ffffff;
+}
+
+/* Histogram */
+.histogram {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.histogram-title {
+  font-size: 0.9rem;
+  color: #8a8a92;
+  margin: 0 0 12px;
+}
+
+.histogram-bars {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 14px;
+  height: 140px;
+}
+
+.histogram-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  max-width: 48px;
+}
+
+.histogram-track {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: flex-end;
+  background: #17171c;
+  border-radius: 4px;
+  overflow: visible;
+}
+
+.histogram-bar {
+  width: 100%;
+  background: #e8e8ec;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.3s ease;
+}
+
+.histogram-expected {
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  border-top: 1.5px dashed #ff5a5f;
+}
+
+.histogram-label {
+  font-size: 0.85rem;
+  color: #b5b5bd;
+}
+
+.histogram-count {
+  font-size: 0.75rem;
+  color: #6a6a72;
+}
+
+@media (max-width: 480px) {
+  :root {
+    --die-size: 72px;
+  }
+
+  .stage-line {
+    font-size: 1.3rem;
+  }
+
+  .play-screen {
+    gap: 24px;
+  }
+}
