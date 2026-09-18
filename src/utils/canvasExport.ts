@@ -60,7 +60,7 @@ export async function drawResultCard({ stageIndex, rollCount, counts }: ResultCa
 
   ctx.font = `400 20px ${DISPLAY_FONT}`;
   ctx.fillStyle = "#6a6a72";
-  ctx.fillText("This Is a Game About Luck", CARD_WIDTH / 2, CARD_HEIGHT - 60);
+  ctx.fillText("Congratulations, Probably", CARD_WIDTH / 2, CARD_HEIGHT - 60);
 
   return canvas;
 }

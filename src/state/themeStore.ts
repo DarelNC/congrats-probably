@@ -9,7 +9,7 @@ export const THEMES: { id: ThemeId; label: string }[] = [
   { id: "paper", label: "Paper" },
 ];
 
-const THEME_KEY = "luck-game:theme";
+const THEME_KEY = "congrats-probably:theme";
 
 function loadTheme(): ThemeId {
   try {

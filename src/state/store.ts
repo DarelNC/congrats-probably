@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { rollDie } from "../utils/rng";
 
-const BEST_RUN_KEY = "luck-game:best-run";
-const LIFETIME_KEY = "luck-game:lifetime";
+const BEST_RUN_KEY = "congrats-probably:best-run";
+const LIFETIME_KEY = "congrats-probably:lifetime";
 const ROLL_ANIMATION_MS = 650;
 
 export type Phase = "ready" | "rolling" | "gameover";

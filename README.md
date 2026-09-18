@@ -1,6 +1,6 @@
-# This Is a Game About Luck
+# Congratulations, Probably
 
-A single-page game: roll a die. Roll a 6 and you advance to the next stage of an escalating, deadpan life story. Roll a 1 and it's over. Nothing else you do matters — there are no choices, no skill, just the die.
+A single-page game about luck: roll a die. Roll a 6 and you advance to the next stage of an escalating, deadpan life story. Roll a 1 and it's over. Nothing else you do matters — there are no choices, no skill, just the die.
 
 **Live demo:** _(add your deployed URL here)_
 
@@ -47,6 +47,8 @@ src/
     GameOverScreen.tsx
     Histogram.tsx        actual vs. expected roll distribution
     ShareCard.tsx         "copy result as image" button
+    ThemePicker.tsx        Minimal / Maximalist / Terminal / Paper theme switcher
+  state/themeStore.ts   theme selection + persistence
 ```
 
 ## Persistence
