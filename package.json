@@ -2,7 +2,19 @@
   "name": "congrats-probably",
   "private": true,
   "version": "0.0.0",
+  "description": "A single-page game about luck. Roll a 6 to advance through an escalating life story, roll a 1 and it's over.",
   "type": "module",
+  "author": "DarelNC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DarelNC/congrats-probably.git"
+  },
+  "homepage": "https://github.com/DarelNC/congrats-probably#readme",
+  "bugs": {
+    "url": "https://github.com/DarelNC/congrats-probably/issues"
+  },
+  "keywords": ["game", "dice", "luck", "react", "vite"],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

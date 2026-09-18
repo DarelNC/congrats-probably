@@ -2,7 +2,9 @@
 
 A single-page game about luck: roll a die. Roll a 6 and you advance to the next stage of an escalating, deadpan life story. Roll a 1 and it's over. Nothing else you do matters — there are no choices, no skill, just the die.
 
-**Live demo:** _(add your deployed URL here)_
+Four selectable themes (Minimal, Maximalist, Terminal, Paper) change how it looks; none of them change the odds.
+
+**Live demo:** not deployed yet — see [Build](#build) to run it yourself.
 
 ## Why
 
@@ -58,3 +60,7 @@ Stored in `localStorage`, nothing else:
 - Lifetime roll count and distribution across all sessions
 
 No accounts, no server sync, no leaderboard — intentionally out of scope.
+
+## License
+
+[MIT](LICENSE)
