@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { THEMES, useThemeStore } from "../state/themeStore";
+import { MAX_THRESHOLD, MIN_THRESHOLD, useShakeSettingsStore } from "../state/shakeSettingsStore";
+import { useIsMobile } from "../utils/useIsMobile";
 
 export default function ThemePicker() {
   const theme = useThemeStore((s) => s.theme);
   const setTheme = useThemeStore((s) => s.setTheme);
+  const threshold = useShakeSettingsStore((s) => s.threshold);
+  const setThreshold = useShakeSettingsStore((s) => s.setThreshold);
+  const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -17,6 +22,9 @@ export default function ThemePicker() {
     document.addEventListener("mousedown", handleOutsideClick);
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [open]);
+
+  // Higher slider position = more sensitive = lower physical threshold, so the range is inverted here.
+  const sensitivity = MAX_THRESHOLD + MIN_THRESHOLD - threshold;
 
   return (
     <div className={`theme-picker ${open ? "open" : ""}`} ref={rootRef}>
@@ -44,6 +52,23 @@ export default function ThemePicker() {
             {t.label}
           </button>
         ))}
+        {isMobile && (
+          <div className="sensitivity-control">
+            <span className="sensitivity-label">Shake sensitivity</span>
+            <div className="sensitivity-slider-row">
+              <span>Less</span>
+              <input
+                type="range"
+                min={MIN_THRESHOLD}
+                max={MAX_THRESHOLD}
+                value={sensitivity}
+                onChange={(e) => setThreshold(MAX_THRESHOLD + MIN_THRESHOLD - Number(e.target.value))}
+                aria-label="Shake sensitivity"
+              />
+              <span>More</span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

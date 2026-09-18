@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useGameStore } from "../state/store";
+import { useShakeSettingsStore } from "../state/shakeSettingsStore";
+import { useIsMobile } from "../utils/useIsMobile";
 
-const MOBILE_QUERY = "(max-width: 480px)";
-const SHAKE_THRESHOLD = 18;
 const SHAKE_COOLDOWN_MS = 1200;
+const VIBRATION_MS = 45;
 
 type MotionEventCtor = typeof DeviceMotionEvent & {
   requestPermission?: () => Promise<"granted" | "denied">;
@@ -21,22 +22,33 @@ function computePermission(isMobile: boolean): PermissionState {
   return needsExplicitPermission() ? "needs-permission" : "listening";
 }
 
+function DieIcon() {
+  return (
+    <svg className="shake-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="1.5" y="1.5" width="21" height="21" rx="5" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="7.5" cy="7.5" r="1.7" fill="currentColor" />
+      <circle cx="16.5" cy="7.5" r="1.7" fill="currentColor" />
+      <circle cx="12" cy="12" r="1.7" fill="currentColor" />
+      <circle cx="7.5" cy="16.5" r="1.7" fill="currentColor" />
+      <circle cx="16.5" cy="16.5" r="1.7" fill="currentColor" />
+    </svg>
+  );
+}
+
 export default function ShakeToRoll() {
   const roll = useGameStore((s) => s.roll);
-  const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_QUERY).matches);
-  const [permission, setPermission] = useState<PermissionState>(() => computePermission(isMobile));
+  const threshold = useShakeSettingsStore((s) => s.threshold);
+  const isMobile = useIsMobile();
+  const derivedPermission = useMemo(() => computePermission(isMobile), [isMobile]);
+  const [permissionOverride, setPermissionOverride] = useState<PermissionState | null>(null);
+  const permission = permissionOverride ?? derivedPermission;
   const lastAccel = useRef<{ x: number; y: number; z: number } | null>(null);
   const lastShakeAt = useRef(0);
+  const thresholdRef = useRef(threshold);
 
   useEffect(() => {
-    const mql = window.matchMedia(MOBILE_QUERY);
-    function onChange(e: MediaQueryListEvent) {
-      setIsMobile(e.matches);
-      setPermission(computePermission(e.matches));
-    }
-    mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
-  }, []);
+    thresholdRef.current = threshold;
+  }, [threshold]);
 
   useEffect(() => {
     if (permission !== "listening") return;
@@ -51,8 +63,9 @@ export default function ShakeToRoll() {
 
       const delta = Math.abs(acc.x - prev.x) + Math.abs(acc.y - prev.y) + Math.abs(acc.z - prev.z);
       const now = Date.now();
-      if (delta > SHAKE_THRESHOLD && now - lastShakeAt.current > SHAKE_COOLDOWN_MS) {
+      if (delta > thresholdRef.current && now - lastShakeAt.current > SHAKE_COOLDOWN_MS) {
         lastShakeAt.current = now;
+        if (navigator.vibrate) navigator.vibrate(VIBRATION_MS);
         roll();
       }
     }
@@ -65,9 +78,9 @@ export default function ShakeToRoll() {
     try {
       const ctor = window.DeviceMotionEvent as MotionEventCtor;
       const result = await ctor.requestPermission!();
-      setPermission(result === "granted" ? "listening" : "unsupported");
+      setPermissionOverride(result === "granted" ? "listening" : "unsupported");
     } catch {
-      setPermission("unsupported");
+      setPermissionOverride("unsupported");
     }
   }
 
@@ -83,7 +96,7 @@ export default function ShakeToRoll() {
 
   return (
     <p className="shake-indicator">
-      <span className="shake-icon" aria-hidden="true" />
+      <DieIcon />
       Shake to roll
     </p>
   );
