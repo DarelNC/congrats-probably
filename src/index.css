@@ -1,8 +1,96 @@
 :root {
   color-scheme: dark;
   --die-size: 90px;
+
   --font-display: "Quicksand", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* minimal (default) theme */
+  --bg: #000000;
+  --fg: #ffffff;
+  --muted: #d8d8de;
+  --muted-2: #8a8a92;
+  --muted-3: #6a6a72;
+  --accent: #ff5a5f;
+  --badge: #ffd166;
+  --border: #ffffff;
+  --border-soft: #6a6a72;
+  --button-fg-hover: #000000;
+  --track-bg: #17171c;
+  --bar-fg: #e8e8ec;
+  --die-bg: #f4f4f6;
+  --die-pip: #14141a;
+  --die-radius: 14%;
+  --die-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  --button-radius: 999px;
+  --letter-spacing: normal;
+}
+
+:root[data-theme="maximalist"] {
+  --font-display: "Quicksand", "Segoe UI", sans-serif;
+  --bg: #2b0f1f;
+  --fg: #fff4e6;
+  --muted: #ffcbd6;
+  --muted-2: #e8a1b8;
+  --muted-3: #c97a95;
+  --accent: #ffd23f;
+  --badge: #7ee8b8;
+  --border: #ffd23f;
+  --border-soft: #e8557a;
+  --button-fg-hover: #2b0f1f;
+  --track-bg: #40182c;
+  --bar-fg: #ff8fa3;
+  --die-bg: #fff4e6;
+  --die-pip: #2b0f1f;
+  --die-radius: 20%;
+  --die-shadow: 0 0 0 3px #e8557a;
+  --button-radius: 999px;
+  --letter-spacing: normal;
+}
+
+:root[data-theme="terminal"] {
+  --font-display: var(--font-mono);
+  --bg: #01100a;
+  --fg: #6dffb0;
+  --muted: #3fcf8a;
+  --muted-2: #2b9c6a;
+  --muted-3: #1f7550;
+  --accent: #6dffb0;
+  --badge: #b6ff6d;
+  --border: #6dffb0;
+  --border-soft: #2b9c6a;
+  --button-fg-hover: #01100a;
+  --track-bg: #052015;
+  --bar-fg: #3fcf8a;
+  --die-bg: #052015;
+  --die-pip: #6dffb0;
+  --die-radius: 2px;
+  --die-shadow: inset 0 0 0 1.5px #6dffb0;
+  --button-radius: 2px;
+  --letter-spacing: 0.02em;
+}
+
+:root[data-theme="paper"] {
+  color-scheme: light;
+  --font-display: "Source Serif 4", Georgia, serif;
+  --bg: #f4ecdc;
+  --fg: #2a1f14;
+  --muted: #5c4d3a;
+  --muted-2: #8a7a63;
+  --muted-3: #a89878;
+  --accent: #a3372f;
+  --badge: #4a6d4f;
+  --border: #2a1f14;
+  --border-soft: #a89878;
+  --button-fg-hover: #f4ecdc;
+  --track-bg: #e6dac2;
+  --bar-fg: #2a1f14;
+  --die-bg: #fffaf0;
+  --die-pip: #2a1f14;
+  --die-radius: 4px;
+  --die-shadow: 0 0 0 1.5px #2a1f14;
+  --button-radius: 4px;
+  --letter-spacing: normal;
 }
 
 * {
@@ -13,13 +101,15 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #000000;
-  color: #ffffff;
+  background: var(--bg);
+  color: var(--fg);
   height: 100%;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 body {
   font-family: var(--font-display);
+  letter-spacing: var(--letter-spacing);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -33,6 +123,42 @@ body {
   align-items: center;
   justify-content: center;
   padding: 24px;
+  position: relative;
+}
+
+.theme-picker {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 200px;
+  z-index: 10;
+}
+
+.theme-picker-option {
+  background: transparent;
+  border: 1px solid var(--border-soft);
+  color: var(--muted-2);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  padding: 5px 10px;
+  border-radius: var(--button-radius);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.theme-picker-option:hover {
+  border-color: var(--accent);
+  color: var(--fg);
+}
+
+.theme-picker-option.active {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .play-screen {
@@ -65,24 +191,24 @@ body {
   font-size: 1.2rem;
   font-weight: 500;
   margin: 12px 0 0;
-  color: #d8d8de;
+  color: var(--muted);
 }
 
 .roll-button {
   background: transparent;
-  border: 1.5px solid #ffffff;
-  color: #ffffff;
+  border: 1.5px solid var(--border);
+  color: var(--fg);
   font-size: 1.05rem;
   font-weight: 600;
   padding: 12px 40px;
-  border-radius: 999px;
+  border-radius: var(--button-radius);
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease, opacity 0.15s ease;
 }
 
 .roll-button:hover:not(:disabled) {
-  background: #ffffff;
-  color: #000000;
+  background: var(--border);
+  color: var(--button-fg-hover);
 }
 
 .roll-button:disabled {
@@ -98,7 +224,7 @@ body {
 .quit-line {
   font-size: 1.2rem;
   font-weight: 500;
-  color: #d8d8de;
+  color: var(--muted);
   margin: 0;
 }
 
@@ -120,18 +246,18 @@ body {
 
 .game-over-rolls {
   font-size: 1.1rem;
-  color: #d8d8de;
+  color: var(--muted);
   margin: 0;
 }
 
 .best-badge {
-  color: #ffd166;
+  color: var(--badge);
   font-weight: 600;
 }
 
 .best-run {
   font-size: 0.95rem;
-  color: #8a8a92;
+  color: var(--muted-2);
   margin: -8px 0 0;
 }
 
@@ -145,18 +271,18 @@ body {
 
 .share-button {
   background: transparent;
-  border: 1.5px solid #6a6a72;
-  color: #ffffff;
+  border: 1.5px solid var(--border-soft);
+  color: var(--fg);
   font-size: 1rem;
   font-weight: 600;
   padding: 12px 28px;
-  border-radius: 999px;
+  border-radius: var(--button-radius);
   cursor: pointer;
   transition: border-color 0.15s ease;
 }
 
 .share-button:hover {
-  border-color: #ffffff;
+  border-color: var(--border);
 }
 
 /* Histogram */
@@ -167,7 +293,7 @@ body {
 
 .histogram-title {
   font-size: 0.9rem;
-  color: #8a8a92;
+  color: var(--muted-2);
   margin: 0 0 12px;
 }
 
@@ -194,34 +320,42 @@ body {
   height: 100px;
   display: flex;
   align-items: flex-end;
-  background: #17171c;
+  background: var(--track-bg);
   border-radius: 4px;
   overflow: visible;
 }
 
 .histogram-bar {
   width: 100%;
-  background: #e8e8ec;
+  background: var(--bar-fg);
   border-radius: 4px 4px 0 0;
-  transition: height 0.3s ease;
+  transition: height 0.3s ease, background 0.25s ease;
 }
 
 .histogram-expected {
   position: absolute;
   left: -4px;
   right: -4px;
-  border-top: 1.5px dashed #ff5a5f;
+  border-top: 1.5px dashed var(--accent);
 }
 
 .histogram-label {
   font-size: 0.85rem;
-  color: #b5b5bd;
+  color: var(--muted-2);
 }
 
 .histogram-count {
   font-size: 0.75rem;
-  color: #6a6a72;
+  color: var(--muted-3);
 }
+
+/* maximalist: each face gets its own color, since the game's whole content is six outcomes */
+:root[data-theme="maximalist"] .histogram-col:nth-child(1) .histogram-bar { background: #ff8fa3; }
+:root[data-theme="maximalist"] .histogram-col:nth-child(2) .histogram-bar { background: #ffd23f; }
+:root[data-theme="maximalist"] .histogram-col:nth-child(3) .histogram-bar { background: #7ee8b8; }
+:root[data-theme="maximalist"] .histogram-col:nth-child(4) .histogram-bar { background: #6dc2ff; }
+:root[data-theme="maximalist"] .histogram-col:nth-child(5) .histogram-bar { background: #c792ff; }
+:root[data-theme="maximalist"] .histogram-col:nth-child(6) .histogram-bar { background: #ff9d5c; }
 
 @media (max-width: 480px) {
   :root {
@@ -234,5 +368,12 @@ body {
 
   .play-screen {
     gap: 24px;
+  }
+
+  .theme-picker {
+    position: static;
+    margin-bottom: 12px;
+    max-width: none;
+    justify-content: center;
   }
 }

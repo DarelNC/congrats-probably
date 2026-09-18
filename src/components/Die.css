@@ -16,9 +16,10 @@
   position: absolute;
   width: var(--die-size, 90px);
   height: var(--die-size, 90px);
-  background: #f4f4f6;
-  border-radius: 14%;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  background: var(--die-bg);
+  border-radius: var(--die-radius);
+  box-shadow: var(--die-shadow);
+  backface-visibility: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,5 +63,5 @@
 }
 
 .die-pip.on {
-  background: #14141a;
+  background: var(--die-pip);
 }
