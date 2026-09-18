@@ -4,7 +4,7 @@ const THRESHOLD_KEY = "congrats-probably:shake-threshold";
 
 export const MIN_THRESHOLD = 8;
 export const MAX_THRESHOLD = 30;
-export const DEFAULT_THRESHOLD = 18;
+export const DEFAULT_THRESHOLD = 14;
 
 function loadThreshold(): number {
   try {

@@ -4,7 +4,7 @@ import { useShakeSettingsStore } from "../state/shakeSettingsStore";
 import { useIsMobile } from "../utils/useIsMobile";
 
 const SHAKE_COOLDOWN_MS = 1200;
-const VIBRATION_MS = 45;
+const VIBRATION_MS = 90;
 
 type MotionEventCtor = typeof DeviceMotionEvent & {
   requestPermission?: () => Promise<"granted" | "denied">;
