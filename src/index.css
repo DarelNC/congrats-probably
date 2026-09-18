@@ -235,6 +235,63 @@ body {
   margin: 0;
 }
 
+.shake-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--muted-2);
+  font-family: var(--font-display);
+  background: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.shake-indicator-button {
+  cursor: pointer;
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--button-radius);
+  padding: 8px 16px;
+  color: var(--fg);
+  transition: border-color 0.15s ease;
+}
+
+.shake-indicator-button:hover {
+  border-color: var(--border);
+}
+
+.shake-icon {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--muted-2);
+  border-radius: 3px;
+  display: inline-block;
+  animation: shake-hint 3.4s ease-in-out infinite;
+}
+
+@keyframes shake-hint {
+  0%,
+  80%,
+  100% {
+    transform: rotate(0deg) translateX(0);
+  }
+  83% {
+    transform: rotate(-14deg) translateX(-2px);
+  }
+  86% {
+    transform: rotate(11deg) translateX(2px);
+  }
+  89% {
+    transform: rotate(-7deg) translateX(-1px);
+  }
+  92% {
+    transform: rotate(0deg) translateX(0);
+  }
+}
+
 .game-over {
   width: 100%;
   max-width: 480px;

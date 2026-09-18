@@ -7,6 +7,7 @@ import RollButton from "./components/RollButton";
 import StageDisplay from "./components/StageDisplay";
 import GameOverScreen from "./components/GameOverScreen";
 import ThemePicker from "./components/ThemePicker";
+import ShakeToRoll from "./components/ShakeToRoll";
 import { QUIT_LINE } from "./content";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <StageDisplay />
             <Die value={dieValue} rolling={phase === "rolling"} durationMs={ROLL_ANIMATION_MS} />
             <RollButton />
+            <ShakeToRoll />
             <p className="quit-line">{QUIT_LINE}</p>
           </div>
         )}
