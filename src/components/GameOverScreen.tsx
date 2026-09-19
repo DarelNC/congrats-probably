@@ -3,6 +3,7 @@ import { useGameStore } from "../state/store";
 import { oddsLine, stageReachedLine } from "../content";
 import { withMonoDigits } from "../utils/withMonoDigits";
 import Histogram from "./Histogram";
+import RunHistory from "./RunHistory";
 import ShareCard from "./ShareCard";
 
 function toCounts(rollHistory: number[]): number[] {
@@ -15,6 +16,7 @@ export default function GameOverScreen() {
   const stageIndex = useGameStore((s) => s.stageIndex);
   const rollHistory = useGameStore((s) => s.rollHistory);
   const bestRun = useGameStore((s) => s.bestRun);
+  const runHistory = useGameStore((s) => s.runHistory);
   const reset = useGameStore((s) => s.reset);
 
   const counts = toCounts(rollHistory);
@@ -44,6 +46,8 @@ export default function GameOverScreen() {
       )}
 
       <Histogram counts={counts} title="Your roll distribution" />
+
+      <RunHistory runs={runHistory} />
 
       <div className="game-over-actions">
         <motion.button className="roll-button" onClick={reset} whileTap={{ scale: 0.94 }} transition={{ duration: 0.1 }}>

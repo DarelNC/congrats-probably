@@ -3,6 +3,8 @@ import { rollDie } from "../utils/rng";
 
 const BEST_RUN_KEY = "congrats-probably:best-run";
 const LIFETIME_KEY = "congrats-probably:lifetime";
+const RUN_HISTORY_KEY = "congrats-probably:run-history";
+const MAX_RUN_HISTORY = 5;
 const ROLL_ANIMATION_MS = 650;
 
 export type Phase = "ready" | "rolling" | "gameover";
@@ -15,6 +17,11 @@ export interface BestRun {
 export interface Lifetime {
   totalRolls: number;
   distribution: [number, number, number, number, number, number];
+}
+
+export interface RunRecord {
+  stage: number;
+  rolls: number;
 }
 
 function emptyDistribution(): [number, number, number, number, number, number] {
@@ -57,6 +64,24 @@ function saveLifetime(lifetime: Lifetime) {
   }
 }
 
+function loadRunHistory(): RunRecord[] {
+  try {
+    const raw = localStorage.getItem(RUN_HISTORY_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw) as RunRecord[];
+  } catch {
+    return [];
+  }
+}
+
+function saveRunHistory(history: RunRecord[]) {
+  try {
+    localStorage.setItem(RUN_HISTORY_KEY, JSON.stringify(history));
+  } catch {
+    // localStorage unavailable — ignore
+  }
+}
+
 interface GameState {
   phase: Phase;
   stageIndex: number;
@@ -66,6 +91,7 @@ interface GameState {
   gameStartedAt: number | null;
   bestRun: BestRun | null;
   lifetime: Lifetime;
+  runHistory: RunRecord[];
   roll: () => void;
   reset: () => void;
 }
@@ -79,6 +105,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   gameStartedAt: null,
   bestRun: loadBestRun(),
   lifetime: loadLifetime(),
+  runHistory: loadRunHistory(),
 
   roll: () => {
     const { phase } = get();
@@ -115,6 +142,13 @@ export const useGameStore = create<GameState>((set, get) => ({
             bestRun = { stage: finishedStage, rolls: finishedRolls };
             saveBestRun(bestRun);
           }
+
+          const runHistory = [{ stage: finishedStage, rolls: finishedRolls }, ...state.runHistory].slice(
+            0,
+            MAX_RUN_HISTORY,
+          );
+          saveRunHistory(runHistory);
+
           return {
             phase: "gameover",
             lastRoll: value,
@@ -122,6 +156,7 @@ export const useGameStore = create<GameState>((set, get) => ({
             rollHistory,
             lifetime,
             bestRun,
+            runHistory,
           };
         }
 

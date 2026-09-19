@@ -477,6 +477,31 @@ body {
   color: var(--muted-3);
 }
 
+.run-history {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.run-history-title {
+  font-size: 0.9rem;
+  color: var(--muted-2);
+  margin: 0 0 8px;
+}
+
+.run-history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.run-history-row {
+  font-size: 0.85rem;
+  color: var(--muted-3);
+}
+
 /* maximalist: each face gets its own color, since the game's whole content is six outcomes */
 :root[data-theme="maximalist"] .histogram-col:nth-child(1) .histogram-bar { background: #ff8fa3; }
 :root[data-theme="maximalist"] .histogram-col:nth-child(2) .histogram-bar { background: #ffd23f; }
