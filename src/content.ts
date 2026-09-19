@@ -134,3 +134,18 @@ export function streakCommentary(rollHistory: number[]): string | null {
 
   return null;
 }
+
+export const creditsRemarks: string[] = [
+  "No refunds on rolled ones.",
+  "This game has no developers, just decisions.",
+  "Built by someone with too much time and a d6.",
+  "Certified 100% skill-free.",
+  "The house always wins. There is no house.",
+  "Thoughts and prayers will not help the next roll.",
+  "Made possible by chance, spite, and a bit of CSS.",
+  "Patch notes: none. It's a die.",
+];
+
+export function randomCreditsRemark(): string {
+  return creditsRemarks[Math.floor(Math.random() * creditsRemarks.length)];
+}

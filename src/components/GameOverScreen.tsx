@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useGameStore } from "../state/store";
-import { oddsLine, stageReachedLine } from "../content";
+import { oddsLine, randomCreditsRemark, stageReachedLine } from "../content";
 import { withMonoDigits } from "../utils/withMonoDigits";
 import Histogram from "./Histogram";
 import RunHistory from "./RunHistory";
@@ -24,6 +25,7 @@ export default function GameOverScreen() {
   const rollCount = rollHistory.length;
   const isBest = bestRun && bestRun.stage === stageIndex && bestRun.rolls === rollCount;
   const odds = oddsLine(stageIndex);
+  const [creditsRemark] = useState(randomCreditsRemark);
 
   return (
     <motion.div
@@ -56,6 +58,8 @@ export default function GameOverScreen() {
         </motion.button>
         <ShareCard stageIndex={stageIndex} stageTextIndex={stageTextIndex} rollCount={rollCount} counts={counts} />
       </div>
+
+      <p className="credits-remark">{creditsRemark}</p>
     </motion.div>
   );
 }
