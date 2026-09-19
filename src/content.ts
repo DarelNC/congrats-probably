@@ -47,3 +47,24 @@ export function oddsLine(stageIndex: number): string | null {
   if (stageIndex <= 0) return null;
   return `1 in ${oddsDenominator(stageIndex).toLocaleString()} runs make it this far.`;
 }
+
+export function streakCommentary(rollHistory: number[]): string | null {
+  if (rollHistory.length < 3) return null;
+
+  const last = rollHistory[rollHistory.length - 1];
+  const lastThreeMatch = rollHistory.slice(-3).every((v) => v === last);
+  if (lastThreeMatch && last !== 1) {
+    return `Three ${last}s in a row. Doesn't change the next one.`;
+  }
+
+  let noSixStreak = 0;
+  for (let i = rollHistory.length - 1; i >= 0; i--) {
+    if (rollHistory[i] === 6 || rollHistory[i] === 1) break;
+    noSixStreak++;
+  }
+  if (noSixStreak >= 5) {
+    return `No 6 in ${noSixStreak} rolls. The die has no memory.`;
+  }
+
+  return null;
+}
