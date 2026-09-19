@@ -5,6 +5,7 @@ import { withMonoDigits } from "../utils/withMonoDigits";
 
 export default function StageDisplay() {
   const stageIndex = useGameStore((s) => s.stageIndex);
+  const stageTextIndex = useGameStore((s) => s.stageTextIndex);
   const rollHistory = useGameStore((s) => s.rollHistory);
   const odds = oddsLine(stageIndex);
   const streak = streakCommentary(rollHistory);
@@ -19,7 +20,7 @@ export default function StageDisplay() {
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.35 }}
         >
-          <p className="stage-line">{currentStageLine(stageIndex)}</p>
+          <p className="stage-line">{currentStageLine(stageIndex, stageTextIndex)}</p>
           {stageIndex === 0 && <p className="stage-subline">{INTRO_LINES[1]}</p>}
           {odds && <p className="odds-line">{withMonoDigits(odds)}</p>}
           {streak && <p className="streak-line">{withMonoDigits(streak)}</p>}

@@ -5,16 +5,17 @@ import { exportCanvasAsImage } from "../utils/canvasExport";
 
 interface ShareCardProps {
   stageIndex: number;
+  stageTextIndex: number;
   rollCount: number;
   counts: number[];
 }
 
-export default function ShareCard({ stageIndex, rollCount, counts }: ShareCardProps) {
+export default function ShareCard({ stageIndex, stageTextIndex, rollCount, counts }: ShareCardProps) {
   const [status, setStatus] = useState<"idle" | "copied" | "downloaded" | "error">("idle");
 
   async function handleShare() {
     try {
-      const canvas = await drawResultCard({ stageIndex, rollCount, counts });
+      const canvas = await drawResultCard({ stageIndex, stageTextIndex, rollCount, counts });
       const result = await exportCanvasAsImage(canvas);
       setStatus(result);
       setTimeout(() => setStatus("idle"), 2200);

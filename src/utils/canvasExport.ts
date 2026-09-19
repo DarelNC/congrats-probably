@@ -2,6 +2,7 @@ import { currentStageLine, stageReachedLine } from "../content";
 
 export interface ResultCardData {
   stageIndex: number;
+  stageTextIndex: number;
   rollCount: number;
   counts: number[];
 }
@@ -24,7 +25,12 @@ async function ensureFontsLoaded(): Promise<void> {
   }
 }
 
-export async function drawResultCard({ stageIndex, rollCount, counts }: ResultCardData): Promise<HTMLCanvasElement> {
+export async function drawResultCard({
+  stageIndex,
+  stageTextIndex,
+  rollCount,
+  counts,
+}: ResultCardData): Promise<HTMLCanvasElement> {
   await ensureFontsLoaded();
 
   const canvas = document.createElement("canvas");
@@ -53,7 +59,7 @@ export async function drawResultCard({ stageIndex, rollCount, counts }: ResultCa
   if (stageIndex > 0) {
     ctx.font = `italic 22px ${DISPLAY_FONT}`;
     ctx.fillStyle = "#8a8a92";
-    wrapText(ctx, `"${currentStageLine(stageIndex)}"`, CARD_WIDTH / 2, 360, 620, 30);
+    wrapText(ctx, `"${currentStageLine(stageIndex, stageTextIndex)}"`, CARD_WIDTH / 2, 360, 620, 30);
   }
 
   drawHistogram(ctx, counts, 100, 480, CARD_WIDTH - 200, 320);

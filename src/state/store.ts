@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { rollDie } from "../utils/rng";
+import { stageVariants } from "../content";
 
 const BEST_RUN_KEY = "congrats-probably:best-run";
 const LIFETIME_KEY = "congrats-probably:lifetime";
@@ -82,9 +83,15 @@ function saveRunHistory(history: RunRecord[]) {
   }
 }
 
+function randomStageTextIndex(stageIndex: number): number {
+  if (stageIndex <= 0 || stageIndex > stageVariants.length) return 0;
+  return Math.floor(Math.random() * stageVariants[stageIndex - 1].length);
+}
+
 interface GameState {
   phase: Phase;
   stageIndex: number;
+  stageTextIndex: number;
   rollHistory: number[];
   lastRoll: number | null;
   pendingRoll: number | null;
@@ -99,6 +106,7 @@ interface GameState {
 export const useGameStore = create<GameState>((set, get) => ({
   phase: "ready",
   stageIndex: 0,
+  stageTextIndex: 0,
   rollHistory: [],
   lastRoll: null,
   pendingRoll: null,
@@ -161,13 +169,15 @@ export const useGameStore = create<GameState>((set, get) => ({
         }
 
         if (value === 6) {
+          const stageIndex = state.stageIndex + 1;
           return {
             phase: "ready",
             lastRoll: value,
             pendingRoll: null,
             rollHistory,
             lifetime,
-            stageIndex: state.stageIndex + 1,
+            stageIndex,
+            stageTextIndex: randomStageTextIndex(stageIndex),
           };
         }
 
@@ -186,6 +196,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     set({
       phase: "ready",
       stageIndex: 0,
+      stageTextIndex: 0,
       rollHistory: [],
       lastRoll: null,
       pendingRoll: null,
