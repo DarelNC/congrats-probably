@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useGameStore } from "../state/store";
-import { stageReachedLine } from "../content";
+import { oddsLine, stageReachedLine } from "../content";
+import { withMonoDigits } from "../utils/withMonoDigits";
 import Histogram from "./Histogram";
 import ShareCard from "./ShareCard";
 
@@ -8,18 +9,6 @@ function toCounts(rollHistory: number[]): number[] {
   const counts = [0, 0, 0, 0, 0, 0];
   for (const roll of rollHistory) counts[roll - 1] += 1;
   return counts;
-}
-
-function withMonoDigits(text: string) {
-  return text.split(/(\d+)/).map((part, i) =>
-    /^\d+$/.test(part) ? (
-      <span className="mono-num" key={i}>
-        {part}
-      </span>
-    ) : (
-      part
-    ),
-  );
 }
 
 export default function GameOverScreen() {
@@ -31,6 +20,7 @@ export default function GameOverScreen() {
   const counts = toCounts(rollHistory);
   const rollCount = rollHistory.length;
   const isBest = bestRun && bestRun.stage === stageIndex && bestRun.rolls === rollCount;
+  const odds = oddsLine(stageIndex);
 
   return (
     <motion.div
@@ -40,6 +30,7 @@ export default function GameOverScreen() {
       transition={{ duration: 0.4 }}
     >
       <p className="game-over-line">{withMonoDigits(stageReachedLine(stageIndex))}</p>
+      {odds && <p className="odds-line">{withMonoDigits(odds)}</p>}
       <p className="game-over-rolls">
         <span className="mono-num">{rollCount}</span> roll{rollCount === 1 ? "" : "s"} taken
         {isBest && <span className="best-badge"> — new best</span>}

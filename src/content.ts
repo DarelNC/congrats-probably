@@ -38,3 +38,12 @@ export function stageReachedLine(stageIndex: number): string {
   const clamped = Math.min(stageIndex, stages.length);
   return `You made it to stage ${clamped}.`;
 }
+
+export function oddsDenominator(stageIndex: number): number {
+  return 2 ** Math.max(stageIndex, 0);
+}
+
+export function oddsLine(stageIndex: number): string | null {
+  if (stageIndex <= 0) return null;
+  return `1 in ${oddsDenominator(stageIndex).toLocaleString()} runs make it this far.`;
+}
