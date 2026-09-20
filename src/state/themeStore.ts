@@ -1,8 +1,9 @@
 import { create } from "zustand";
 
-export type ThemeId = "minimal" | "maximalist" | "terminal" | "paper";
+export type ThemeId = "poster" | "minimal" | "maximalist" | "terminal" | "paper";
 
 export const THEMES: { id: ThemeId; label: string }[] = [
+  { id: "poster", label: "Poster" },
   { id: "minimal", label: "Minimal" },
   { id: "maximalist", label: "Maximalist" },
   { id: "terminal", label: "Terminal" },
@@ -10,6 +11,7 @@ export const THEMES: { id: ThemeId; label: string }[] = [
 ];
 
 const THEME_KEY = "congrats-probably:theme";
+const DEFAULT_THEME: ThemeId = "poster";
 
 function loadTheme(): ThemeId {
   try {
@@ -18,7 +20,7 @@ function loadTheme(): ThemeId {
   } catch {
     // localStorage unavailable — fall back to default
   }
-  return "minimal";
+  return DEFAULT_THEME;
 }
 
 interface ThemeState {

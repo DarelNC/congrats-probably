@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useGameStore } from "../state/store";
-import { oddsLine, randomCreditsRemark, stageReachedLine } from "../content";
+import { GAME_OVER_ZERO_STAGE, oddsLine, randomCreditsRemark, stageVariants } from "../content";
 import { withMonoDigits } from "../utils/withMonoDigits";
 import Histogram from "./Histogram";
 import RunHistory from "./RunHistory";
@@ -11,6 +11,22 @@ function toCounts(rollHistory: number[]): number[] {
   const counts = [0, 0, 0, 0, 0, 0];
   for (const roll of rollHistory) counts[roll - 1] += 1;
   return counts;
+}
+
+// Structured so themes can style "stage" and the number differently; other
+// themes just render these spans inline with no extra styling applied.
+function GameOverHeadline({ stageIndex }: { stageIndex: number }) {
+  if (stageIndex <= 0) return <>{GAME_OVER_ZERO_STAGE}</>;
+  const clamped = Math.min(stageIndex, stageVariants.length);
+  return (
+    <>
+      You made it to
+      <span className="stage-num-row">
+        <span className="stage-word">stage</span>
+        <span className="mono-num stage-num">{clamped}.</span>
+      </span>
+    </>
+  );
 }
 
 export default function GameOverScreen() {
@@ -34,7 +50,9 @@ export default function GameOverScreen() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      <p className="game-over-line">{withMonoDigits(stageReachedLine(stageIndex))}</p>
+      <p className="game-over-line">
+        <GameOverHeadline stageIndex={stageIndex} />
+      </p>
       {odds && <p className="odds-line">{withMonoDigits(odds)}</p>}
       <p className="game-over-rolls">
         <span className="mono-num">{rollCount}</span> roll{rollCount === 1 ? "" : "s"} taken

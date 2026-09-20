@@ -13,8 +13,12 @@ export default function RunHistory({ runs }: RunHistoryProps) {
       <ul className="run-history-list">
         {runs.map((run, i) => (
           <li className="run-history-row" key={i}>
-            Stage <span className="mono-num">{run.stage}</span> — <span className="mono-num">{run.rolls}</span> roll
-            {run.rolls === 1 ? "" : "s"}
+            <span className="run-history-stage">
+              Stage <span className="mono-num">{run.stage}</span>
+            </span>
+            <span className="run-history-rolls">
+              <span className="mono-num">{run.rolls}</span> roll{run.rolls === 1 ? "" : "s"}
+            </span>
           </li>
         ))}
       </ul>

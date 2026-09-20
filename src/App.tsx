@@ -8,7 +8,9 @@ import StageDisplay from "./components/StageDisplay";
 import GameOverScreen from "./components/GameOverScreen";
 import ThemePicker from "./components/ThemePicker";
 import ShakeToRoll from "./components/ShakeToRoll";
+import PosterBackdrop from "./components/PosterBackdrop";
 import { QUIT_LINE } from "./content";
+import { highlightFirstDigit } from "./utils/withMonoDigits";
 
 function App() {
   const phase = useGameStore((s) => s.phase);
@@ -24,6 +26,7 @@ function App() {
 
   return (
     <main className="app">
+      {theme === "poster" && <PosterBackdrop />}
       <ThemePicker />
       <AnimatePresence mode="wait">
         {phase === "gameover" ? (
@@ -34,7 +37,7 @@ function App() {
             <Die value={dieValue} rolling={phase === "rolling"} durationMs={ROLL_ANIMATION_MS} />
             <RollButton />
             <ShakeToRoll />
-            <p className="quit-line">{QUIT_LINE}</p>
+            <p className="quit-line">{highlightFirstDigit(QUIT_LINE, "digit-one")}</p>
           </div>
         )}
       </AnimatePresence>
