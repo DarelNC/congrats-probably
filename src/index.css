@@ -567,7 +567,7 @@ body {
 :root[data-theme="maximalist"] .histogram-col:nth-child(5) .histogram-bar { background: #c792ff; }
 :root[data-theme="maximalist"] .histogram-col:nth-child(6) .histogram-bar { background: #ff9d5c; }
 
-/* poster: bespoke visual system — layered background, grain, spinning rings,
+/* poster: bespoke visual system: layered background, grain, spinning rings,
    mixed type (heavy sans headlines, serif italic accents, mono everywhere else) */
 [data-theme="poster"] body {
   position: relative;

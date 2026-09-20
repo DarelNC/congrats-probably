@@ -1,23 +1,23 @@
 # Congratulations, Probably
 
-A single-page game about luck: roll a die. Roll a 6 and you advance to the next stage of an escalating, deadpan life story. Roll a 1 and it's over. Nothing else you do matters — there are no choices, no skill, just the die.
+A single-page game about luck. You roll a die: a 6 advances you to the next stage of an escalating, deadpan life story, and a 1 ends the run. Nothing else you do matters, because there are no choices and no skill, only the die.
 
-Four selectable themes (Minimal, Maximalist, Terminal, Paper) change how it looks; none of them change the odds.
+Five selectable themes (Poster, Minimal, Maximalist, Terminal, Paper) change how it looks. None of them change the odds. On a phone you can also shake the device to roll.
 
-**Live demo:** not deployed yet — see [Build](#build) to run it yourself.
+**Live demo:** not deployed yet. See [Build](#build) to run it yourself.
 
 ## Why
 
-Most games let you believe your choices mattered even when the underlying system was mostly random. This one strips that away: the entire "story" of your run — job, house, kid, Mars — is gated behind nothing but a d6. It's a small, honest joke about how much of what people credit to effort is actually variance, dressed up as a game so it's fun to sit with for thirty seconds instead of depressing.
+Most games let you believe your choices mattered even when the system underneath is mostly random. Here the whole story of your run (job, house, kid, Mars) is gated behind a d6. It's a small joke about how much of what people credit to effort is variance, packaged as a game that's fun to sit with for thirty seconds.
 
 ## Stack
 
 - React 18 + TypeScript + Vite
 - Zustand for state
-- Framer Motion for the die-roll and stage transitions
-- Canvas API for the shareable result card (no chart/image libraries)
+- Framer Motion for the die roll and stage transitions
+- Canvas API for the shareable result card (no chart or image libraries)
 - Plain CSS, no Tailwind
-- No backend — everything is client-side, persisted to `localStorage`
+- No backend. Everything runs client-side and persists to `localStorage`
 
 ## Local dev
 
@@ -32,34 +32,40 @@ npm run dev
 npm run build
 ```
 
-Outputs a static site in `dist/` — deployable as-is to Vercel, Netlify, or GitHub Pages.
+Outputs a static site in `dist/`, deployable as-is to Vercel, Netlify, or GitHub Pages.
 
 ## Project structure
 
 ```
 src/
-  content.ts          stage text (edit this to change the game's story)
-  state/store.ts       zustand store: roll logic, stage/game-over transitions, persistence
-  utils/rng.ts          die-roll RNG + outcome classification
-  utils/canvasExport.ts canvas rendering + clipboard/download for the share card
+  content.ts             stage text (edit this to change the game's story)
+  state/store.ts         zustand store: roll logic, stage/game-over transitions, persistence
+  state/themeStore.ts    theme selection + persistence
+  state/shakeSettingsStore.ts  shake sensitivity + persistence
+  utils/rng.ts           die-roll RNG + outcome classification
+  utils/canvasExport.ts  canvas rendering + clipboard/download for the share card
   components/
-    Die.tsx             animated 3D die
+    Die.tsx              animated 3D die
     RollButton.tsx
+    ShakeToRoll.tsx      shake-to-roll on mobile
     StageDisplay.tsx
     GameOverScreen.tsx
     Histogram.tsx        actual vs. expected roll distribution
-    ShareCard.tsx         "copy result as image" button
-    ThemePicker.tsx        Minimal / Maximalist / Terminal / Paper theme switcher
-  state/themeStore.ts   theme selection + persistence
+    RunHistory.tsx       last 5 runs
+    ShareCard.tsx        "copy result as image" button
+    ThemePicker.tsx      theme switcher
+    PosterBackdrop.tsx   decorative rings for the Poster theme
 ```
 
 ## Persistence
 
-Stored in `localStorage`, nothing else:
+Stored in `localStorage` and nowhere else:
 - Best run (furthest stage reached, tie-broken by fewest rolls)
+- Recent runs (last 5)
 - Lifetime roll count and distribution across all sessions
+- Theme and shake sensitivity
 
-No accounts, no server sync, no leaderboard — intentionally out of scope.
+Accounts, server sync and a leaderboard are out of scope on purpose.
 
 ## License
 

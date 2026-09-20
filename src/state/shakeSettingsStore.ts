@@ -12,7 +12,7 @@ function loadThreshold(): number {
     const parsed = raw === null ? NaN : Number(raw);
     if (!Number.isNaN(parsed) && parsed >= MIN_THRESHOLD && parsed <= MAX_THRESHOLD) return parsed;
   } catch {
-    // localStorage unavailable — fall back to default
+    // localStorage unavailable: fall back to default
   }
   return DEFAULT_THRESHOLD;
 }
@@ -28,7 +28,7 @@ export const useShakeSettingsStore = create<ShakeSettingsState>((set) => ({
     try {
       localStorage.setItem(THRESHOLD_KEY, String(value));
     } catch {
-      // localStorage unavailable — selection just won't persist
+      // localStorage unavailable: selection just won't persist
     }
     set({ threshold: value });
   },

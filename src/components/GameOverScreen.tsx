@@ -56,7 +56,7 @@ export default function GameOverScreen() {
       {odds && <p className="odds-line">{withMonoDigits(odds)}</p>}
       <p className="game-over-rolls">
         <span className="mono-num">{rollCount}</span> roll{rollCount === 1 ? "" : "s"} taken
-        {isBest && <span className="best-badge"> — new best</span>}
+        {isBest && <span className="best-badge"> (new best)</span>}
       </p>
 
       {bestRun && !isBest && (

@@ -18,7 +18,7 @@ function loadTheme(): ThemeId {
     const raw = localStorage.getItem(THEME_KEY);
     if (raw && THEMES.some((t) => t.id === raw)) return raw as ThemeId;
   } catch {
-    // localStorage unavailable — fall back to default
+    // localStorage unavailable: fall back to default
   }
   return DEFAULT_THEME;
 }
@@ -34,7 +34,7 @@ export const useThemeStore = create<ThemeState>((set) => ({
     try {
       localStorage.setItem(THEME_KEY, theme);
     } catch {
-      // localStorage unavailable — selection just won't persist
+      // localStorage unavailable: selection just won't persist
     }
     set({ theme });
   },

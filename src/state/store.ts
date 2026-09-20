@@ -43,7 +43,7 @@ function saveBestRun(run: BestRun) {
   try {
     localStorage.setItem(BEST_RUN_KEY, JSON.stringify(run));
   } catch {
-    // localStorage unavailable — ignore
+    // localStorage unavailable: ignore
   }
 }
 
@@ -61,7 +61,7 @@ function saveLifetime(lifetime: Lifetime) {
   try {
     localStorage.setItem(LIFETIME_KEY, JSON.stringify(lifetime));
   } catch {
-    // localStorage unavailable — ignore
+    // localStorage unavailable: ignore
   }
 }
 
@@ -79,7 +79,7 @@ function saveRunHistory(history: RunRecord[]) {
   try {
     localStorage.setItem(RUN_HISTORY_KEY, JSON.stringify(history));
   } catch {
-    // localStorage unavailable — ignore
+    // localStorage unavailable: ignore
   }
 }
 
