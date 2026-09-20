@@ -4,7 +4,7 @@ A single-page game about luck. You roll a die: a 6 advances you to the next stag
 
 Five selectable themes (Poster, Minimal, Maximalist, Terminal, Paper) change how it looks. None of them change the odds. On a phone you can also shake the device to roll.
 
-**Live demo:** not deployed yet. See [Build](#build) to run it yourself.
+**Live demo:** [congrats-probably.vercel.app](https://congrats-probably.vercel.app/)
 
 ## Why
 
@@ -12,7 +12,7 @@ Most games let you believe your choices mattered even when the system underneath
 
 ## Stack
 
-- React 18 + TypeScript + Vite
+- React 19 + TypeScript + Vite
 - Zustand for state
 - Framer Motion for the die roll and stage transitions
 - Canvas API for the shareable result card (no chart or image libraries)
