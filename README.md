@@ -6,6 +6,12 @@ Five selectable themes (Poster, Minimal, Maximalist, Terminal, Paper) change how
 
 **Live demo:** [congrats-probably.vercel.app](https://congrats-probably.vercel.app/)
 
+<p>
+  <img src="docs/screenshots/start.png" alt="The start screen: 'This is a game about luck. Roll 6 to start.' with a one-pip die and a Roll button" width="32%">
+  <img src="docs/screenshots/first-stage.png" alt="Stage 1: 'You were born. Nobody asked for your input.' with a six-pip die and the line '1 in 2 runs make it this far'" width="32%">
+  <img src="docs/screenshots/game-over.png" alt="The game-over screen with the roll distribution histogram, best run and recent runs" width="32%">
+</p>
+
 ## Why
 
 Most games let you believe your choices mattered even when the system underneath is mostly random. Here the whole story of your run (job, house, kid, Mars) is gated behind a d6. It's a small joke about how much of what people credit to effort is variance, packaged as a game that's fun to sit with for thirty seconds.
