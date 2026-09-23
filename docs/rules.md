@@ -11,7 +11,21 @@ If an external dependency (analytics, a font CDN, a future leaderboard API) is e
 - Prefer a documented, stable API contract over scraping or an undocumented endpoint. Treat anything undocumented as a fallback at best.
 - Design for the dependency to fail without breaking the game: the die must still roll if a font CDN or an analytics call times out or is blocked.
 
-**Origin:** generalized from a rebuild whose predecessor died because its browser code called an undocumented free API directly with no fallback. It doesn't apply to this project's current shape yet, but the discipline (don't hardcode a fragile single dependency into the client) applies the moment one is introduced.
+**Origin:** generalized from a rebuild whose predecessor died because its browser code called an undocumented free API directly with no fallback. It did not apply to this project's shape at first, but the discipline (don't hardcode a fragile single dependency into the client) applies the moment one is introduced, and it now covers the analytics call described below.
+
+## The one exception: anonymous page-view counts (2026-09-23)
+
+The game now counts page views, and that needed the project's first server-side code. `src/analytics.ts` sends one `sendBeacon` per load to `api/hit.js`, a Vercel function that builds the event and posts it to the owner's own collector (`single-point-of-failure`, shared with other projects) using a secret key. The key cannot live in the browser bundle, which is why a function exists at all.
+
+What is sent: the time, the country (from Vercel's edge header), `mobile`, `tablet` or `desktop`, the referring host, an optional `?ref=` or `?utm_source=` tag, and a visitor hash of the IP address, browser string, a secret salt and the date, which changes daily. Never stored: the IP address, the browser string, the full URL. No cookie is set. Bots, prefetches and browsers sending Do Not Track are skipped.
+
+This follows the rules above: the client side is one module (`src/analytics.ts`), the beacon is fire and forget so the die rolls whether or not the function, the collector or the network answers, and the function gives up on the collector after 3 seconds. It is skipped in `vite dev`.
+
+Set `COLLECTOR_URL`, `COLLECTOR_KEY` and `VISITOR_SALT` on Vercel for **Production only**. Without them the function does nothing, so previews record nothing.
+
+**Strongest objection:** this is a game whose stated point is that it needs no server, and it now has one. The answer is that it is one stateless function of about 40 lines that only relays counts, the game does not depend on it, and removing it means deleting `api/`, `src/analytics.ts` and the `trackView()` call in `src/main.tsx`. The alternative, sending from the browser, would put the collector key in public JavaScript, where anyone could fill the numbers with fake events.
+
+Only views are collected. There are no game events (rolls, stages reached), and adding them would be its own decision.
 
 ## Default branch is `master`
 

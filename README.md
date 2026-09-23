@@ -23,7 +23,8 @@ Most games let you believe your choices mattered even when the system underneath
 - Framer Motion for the die roll and stage transitions
 - Canvas API for the shareable result card (no chart or image libraries)
 - Plain CSS, no Tailwind
-- No backend. Everything runs client-side and persists to `localStorage`
+- No backend for the game: everything runs client-side and persists to `localStorage`
+- One small Vercel function, `api/hit.js`, relays anonymous page-view counts to the owner's own collector. The game never waits on it. See [`docs/rules.md`](docs/rules.md)
 
 ## Local dev
 
